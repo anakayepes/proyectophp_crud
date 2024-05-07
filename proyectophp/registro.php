@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro sesion</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
   <body>
   <?php
@@ -12,6 +13,26 @@
           include_once("./conexion.php");
           $sql = "INSERT  INTO usuarios (nombre, correo, contrasena) VALUES ('".$_POST["user"]."', '".$_POST["email"]."', '".$_POST["pass"]."')";
           $conn->query($sql);
+
+            echo '
+              <script>
+                  Swal.fire({
+                      title: "Felicitaciones",
+                      text: "Tu usuario ha sido registrado",
+                      icon: "success",
+                      showCancelButton: true,
+                      confirmButtonColor: "#3085d6",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Ir a inicio",
+                      cancelButtonText: "Cerrar"
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                          window.location.href = "index.php"; // Cambia "inicio.php" por la URL de tu página de inicio
+                      }
+                  });
+              </script>
+            ';
+        
       }
     ?>
     <form action=""  method="post"  class="row g-3">
@@ -52,8 +73,8 @@
       </div>
       <div for="registro "class="col-12">
         
-      <a href="index.php"><button href="index.php" class=" btn-primary" type="submit" name="registro" id="registro" >registro</button></a>
-
+      <a href="index.php"><button  class=" btn-primary" type="submit" name="registro" id="registro" >registro</button></a>
+      
       </div>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

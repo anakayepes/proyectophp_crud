@@ -1,49 +1,3 @@
-<?php
-session_start();
-
-$mensaje_error = ""; // Inicializar la variable de mensaje de error
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include_once("./Usuario.php");
-    include_once("./conexion.php");
-
-    $user = $_POST["user"] ?? "";
-    $pass = $_POST["pass"] ?? "";
-    $email = $_POST["email"] ?? "";
-
-    // Validaciones en cada linea de formulario
-    $errors = [];
-    if (empty($user)) {
-        $errors[] = "El campo Usuario es requerido";
-    }
-    if (empty($pass)) {
-        $errors[] = "El campo Contraseña es requerido";
-    }
-    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "El campo Correo Electrónico es inválido";
-    }
-
-    if (empty($errors)) {
-        $usuario = new Usuario(filter_var($user, FILTER_SANITIZE_FULL_SPECIAL_CHARS), filter_var($pass, FILTER_SANITIZE_FULL_SPECIAL_CHARS), $conn);
-
-        if ($usuario->iniciar_sesion()) {
-            $_SESSION["status"] = true;
-            $_SESSION["user"] = filter_var($user, FILTER_SANITIZE_FULL_SPECIAL_CHARS); // Guardar nombre de usuario en sesión
-            $_SESSION["email"] = filter_var($email, FILTER_SANITIZE_EMAIL); // Guardar correo electrónico en sesión
-            header("location: ./home.php");
-            exit();
-        } else {
-            $mensaje_error = "Si hay error en datos, pagina reinicia!"; // Mensaje de error específico
-        }
-    }
-
-    // Mostrar errores de validación
-    if (!empty($errors)) {
-        $mensaje_error = implode("<br>", $errors);
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -161,3 +115,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+
+<?php
+session_start();
+
+$mensaje_error = ""; // Inicializar la variable de mensaje de error
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    include_once("./Usuario.php");
+    include_once("./conexion.php");
+
+    $user = $_POST["user"] ?? "";
+    $pass = $_POST["pass"] ?? "";
+    $email = $_POST["email"] ?? "";
+
+    // Validaciones en cada linea de formulario
+    $errors = [];
+    if (empty($user)) {
+        $errors[] = "El campo Usuario es requerido";
+    }
+    if (empty($pass)) {
+        $errors[] = "El campo Contraseña es requerido";
+    }
+    if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "El campo Correo Electrónico es inválido";
+    }
+
+    if (empty($errors)) {
+        $usuario = new Usuario(filter_var($user, FILTER_SANITIZE_FULL_SPECIAL_CHARS), filter_var($pass, FILTER_SANITIZE_FULL_SPECIAL_CHARS), $conn);
+
+        if ($usuario->iniciar_sesion()) {
+            $_SESSION["status"] = true;
+            $_SESSION["user"] = filter_var($user, FILTER_SANITIZE_FULL_SPECIAL_CHARS); // Guardar nombre de usuario en sesión
+            $_SESSION["email"] = filter_var($email, FILTER_SANITIZE_EMAIL); // Guardar correo electrónico en sesión
+            header("location: ./home.php");
+            exit();
+        // } else  {
+        //     $mensaje_error = " hay error en datos."; // Mensaje de error específico
+        // comento para aprobar la eliminacion de las anteriores lineas y reemplazar por el siguiete echo.
+        }else{
+            echo '
+                <script>
+                    Swal.fire({
+                        title: "Lo sentimos",
+                        text: "Error al iniciar sesion",
+                        icon: "error"
+                    });
+                </script>
+
+            ';
+        }
+    }
+
+    // Mostrar errores de validación
+    if (!empty($errors)) {
+        $mensaje_error = implode("<br>", $errors);
+    }
+}
+?>
