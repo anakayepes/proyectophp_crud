@@ -208,8 +208,8 @@
 
     <div class="box">
         <span style="--i:1;">
-            <img src="img/imagen1.jpg" alt="">
-            <button id="button1">Bueno</button>
+            <img src="img/seguridad_canina.jpg" alt="">
+            <button id="button1">Canino</button>
         </span>
         <span style="--i:2;">
             <img src="img/imagen2.jpg" alt="">

@@ -17,3 +17,4 @@ $contador = isset($_GET['id'])? $_GET['id'] : 0;
     <!-- Contenido de la página -->
 </body>
 </html>
+s
