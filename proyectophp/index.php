@@ -13,7 +13,7 @@
 
     <style>
         body {
-            background-image: url('img/imagenfondo.jpg');
+            background-image: url('img/tabajandoSeguridad.jpeg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
